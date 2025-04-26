@@ -76,7 +76,7 @@ const Login = () => {
             avatarBase64: "",
             about: "",
           });
-          navigate("/");
+          navigate("/chatzy");
           emailRef.current!.value = "";
           passwordRef.current!.value = "";
           firstNameRef.current!.value = "";
@@ -110,7 +110,7 @@ const Login = () => {
             avatarBase64: userData.avatarBase64,
             about: userData.about,
           });
-          navigate("/");
+          navigate("/chatzy");
         } else {
           console.log("No such document!");
         }

@@ -49,7 +49,7 @@ const SideBar = ({
     >
       <div
         className=" h-[15%] p-5 cursor-pointer w-1/3 md:w-full mt-0 md:mt-1"
-        onClick={() => navigate("/")}
+        onClick={() => navigate("/chatzy")}
       >
         <div className="flex items-center">
           <img
@@ -74,7 +74,7 @@ const SideBar = ({
           className={` cursor-pointer hover:bg-secondary transition-all duration-200 ${
             location.pathname === "/" ? "bg-secondary" : ""
           }`}
-          onClick={() => navigate("/")}
+          onClick={() => navigate("/chatzy")}
         >
           <NavIcon
             Icon={ChatIcon}
@@ -88,7 +88,7 @@ const SideBar = ({
             location.pathname === "/setting" ? "bg-secondary" : ""
           }
           `}
-          onClick={() => navigate("/setting")}
+          onClick={() => navigate("/chatzy/setting")}
         >
           <NavIcon Icon={SettingsIcon} label="Settings" isExpanded={show} />
         </div>

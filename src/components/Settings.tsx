@@ -52,7 +52,7 @@ const Settings = () => {
     try {
       await signOut(auth);
       userCtx?.clearUser();
-      navigate("/login");
+      navigate("/chatzy/login");
     } catch (error) {
       console.error("Logout failed:", error);
     }

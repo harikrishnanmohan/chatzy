@@ -89,7 +89,7 @@ const BuildEntry = () => {
     if (!userCtx?.isLoggedIn()) {
       const storedUser = getSessionValue("user");
       if (!storedUser) {
-        navigate("/login");
+        navigate("/chatzy/login");
       }
     }
 
