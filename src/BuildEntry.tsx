@@ -166,7 +166,7 @@ const BuildEntry = () => {
           className={`${isSctiveChat ? "hidden md:block" : ""}`}
         />
         <div className="flex justify-between min-h-svh w-full realative">
-          {location.pathname === "/setting" ? (
+          {location.pathname === "/chatzy/setting" ? (
             <Settings />
           ) : (
             <Chat

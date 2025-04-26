@@ -72,7 +72,7 @@ const SideBar = ({
       <div className=" flex flex-row md:flex-col md:justify-between h-[85%] justify-around w-2/3 md:w-full">
         <div
           className={` cursor-pointer hover:bg-secondary transition-all duration-200 ${
-            location.pathname === "/" ? "bg-secondary" : ""
+            location.pathname === "/chatzy" ? "bg-secondary" : ""
           }`}
           onClick={() => navigate("/chatzy")}
         >
@@ -85,7 +85,7 @@ const SideBar = ({
         </div>
         <div
           className={`cursor-pointer hover:bg-secondary transition-all duration-200 ${
-            location.pathname === "/setting" ? "bg-secondary" : ""
+            location.pathname === "/chatzy/setting" ? "bg-secondary" : ""
           }
           `}
           onClick={() => navigate("/chatzy/setting")}
