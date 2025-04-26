@@ -10,11 +10,11 @@ import Settings from "./components/Settings";
 function App() {
   const router = createBrowserRouter([
     {
-      path: "/chatzy",
+      path: "/chatzy/",
       element: <BuildEntry />,
       children: [
         {
-          path: "/chatzy",
+          path: "/chatzy/",
           element: <BuildEntry />,
         },
         {
