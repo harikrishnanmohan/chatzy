@@ -1,0 +1,48 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+:root {
+  --color-primary: #f4f5fa;
+  --color-secondary: #e6e8ff;
+  --color-text-primary: #131313;
+  --color-text-secondary: #fff;
+  --color-border-primary: #d9d9d9;
+  --color-message-primary: #e6e6ff;
+  --color-message-secondary: #f0f0f0;
+  --color-shimmer-primary: #cecece;
+  --color-shimmer-secondary: #bdbdbd;
+  --color-icon: #434343;
+}
+
+.dark {
+  --color-primary: #1a1a1a;
+  --color-secondary: #2e343d;
+  --color-text-primary: #ffffff;
+  --color-text-secondary: #fff;
+  --color-border-primary: #343434;
+  --color-message-primary: #5247e6;
+  --color-message-secondary: #3a3a3a;
+  --color-shimmer-primary: #6e6e6e;
+  --color-shimmer-secondary: #000000;
+  --color-icon: #d5d5d5;
+}
+body {
+  font-family: "Poppins", sans-serif;
+}
+* {
+  margin: 0;
+  padding: 0;
+}
+@layer utilities {
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus,
+  input:-webkit-autofill:active {
+    -webkit-box-shadow: 0 0 0px 1000px var(--color-primary) inset !important;
+    -webkit-text-fill-color: #fff !important;
+    caret-color: #ffffff !important;
+  }
+}
