@@ -183,16 +183,17 @@ const Chat = ({
             className={`transition-all duration-500  md:w-[35%] relative pt-6 ${
               activeChat?.otherUser && showLeftBar ? "w-4" : "w-full mb-20"
             }`}
-            onClick={() => {
-              setShowLeftBar((pre) => {
-                if (pre) {
-                  setIsActiveChat(false);
-                }
-                return !pre;
-              });
-            }}
           >
             <div
+              // onClick={() => {
+              //   setShowLeftBar((pre) => {
+              //     if (pre) {
+              //       setIsActiveChat(false);
+              //     }
+              //     return !pre;
+              //   });
+              // }}
+              onClick={() => setShowLeftBar(true)}
               className={`md:hidden ${!showLeftBar ? "hidden" : "md:hidden"}`}
             >
               <MenuIcon />
@@ -256,7 +257,7 @@ const Chat = ({
         {activeChat?.otherUser && (
           <div
             className={`flex md:w-[65%] w-full max-h-svh flex-col border-l-[1px] border-l-solid border-l-borderPrimary ml-6 ${
-              !showLeftBar ? "hidden" : "block"
+              showLeftBar ? "hidden" : "block"
             }`}
           >
             <ChatBox
