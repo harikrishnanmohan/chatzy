@@ -30,6 +30,7 @@ import { ChatType } from "../BuildEntry";
 import useInputDebouncer from "../hooks/useInputDebuncer";
 import Details from "./Details";
 import MenuIcon from "../asset/MenuIcon";
+import UserIcon from "../asset/UserIcon";
 
 dayjs.extend(relativeTime);
 dayjs.extend(isToday);
@@ -234,10 +235,21 @@ const Chat = ({
                     result.map((item) => (
                       <li
                         key={item.id}
-                        className="bg-secondary rounded-lg p-3 cursor-pointer mb-2"
+                        className="bg-secondary rounded-lg p-3 cursor-pointer mb-2 flex justify-left items-center"
                         onClick={() => handleStartChat(item)}
                       >
-                        {item.firstName + " " + item.lastName}
+                        {item.avatarBase64 ? (
+                          <img
+                            src={item.avatarBase64}
+                            alt="user avatar"
+                            className="w-9 h-9 rounded-[50%] object-cover "
+                          />
+                        ) : (
+                          <UserIcon width="36px" height="36px" />
+                        )}
+                        <span className="ml-2">
+                          {item.firstName + " " + item.lastName}
+                        </span>
                       </li>
                     ))
                   ) : (

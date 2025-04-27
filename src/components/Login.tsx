@@ -1,7 +1,9 @@
 import { useContext, useEffect, useRef, useState } from "react";
 import {
   createUserWithEmailAndPassword,
+  GoogleAuthProvider,
   signInWithEmailAndPassword,
+  signInWithPopup,
 } from "firebase/auth";
 import { setDoc, doc, getDoc } from "firebase/firestore";
 import { auth, db } from "../firebase.ts";
@@ -137,6 +139,47 @@ const Login = () => {
     }
   };
 
+  const handleGoogleSignIn = async () => {
+    const provider = new GoogleAuthProvider();
+    setIsLoading(true);
+    try {
+      const result = await signInWithPopup(auth, provider);
+      const user = result.user;
+
+      if (user) {
+        const userDocRef = doc(db, "users", user.uid);
+        const userDoc = await getDoc(userDocRef);
+
+        if (!userDoc.exists()) {
+          await setDoc(userDocRef, {
+            email: user.email,
+            firstName: user.displayName?.split(" ")[0] || "",
+            lastName: user.displayName?.split(" ")[1] || "",
+            userId: user.uid,
+            avatarBase64: user.photoURL || "",
+            about: "",
+          });
+        }
+
+        userCtx?.updateUser({
+          email: user.email || "",
+          firstName: user.displayName?.split(" ")[0] || "",
+          lastName: user.displayName?.split(" ")[1] || "",
+          userId: user.uid,
+          avatarBase64: user.photoURL || "",
+          about: "",
+        });
+
+        navigate("/chatzy/");
+      }
+    } catch (error) {
+      console.error(error);
+      setErrorText("Google sign-in failed. Please try again.");
+      onSetMessage(true);
+    }
+    setIsLoading(false);
+  };
+
   return (
     <div className="w-full h-svh flex items-center justify-center bg-primary text-textPrimary">
       <div className="p-2 md:m-auto flex justify-between items-center bg-[#0e0e0e] rounded-2xl shadow-xl md:max-w-[800px] w-full m-3">
@@ -210,6 +253,7 @@ const Login = () => {
               icon={google}
               className="bg-[#121212] p-2 w-full rounded-lg flex-row-reverse border-[1px] border-[#242424] text-sm"
               iconClass="w-4 h-4"
+              onClick={handleGoogleSignIn}
             />
           </div>
 

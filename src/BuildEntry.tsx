@@ -70,6 +70,7 @@ const BuildEntry = () => {
   }, []);
 
   const getUserInfo = async (userId: string) => {
+    console.log(userId);
     const userDoc = await getDoc(doc(db, "users", userId));
     if (userDoc.exists()) {
       const userData = userDoc.data();

@@ -332,7 +332,7 @@ const ChatBox = ({
   }, [selectedEmoji]);
   const handleEmojiClick = (emojiData: any) => {
     setSelectedEmoji(emojiData.emoji);
-    setShowPicker(false);
+    // setShowPicker(false);
     messageRef.current?.focus();
   };
 

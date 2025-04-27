@@ -41,6 +41,7 @@ const Avathar = ({
     const file = e.target.files?.[0];
     const user = userCtx?.getUser();
     if (!file || !user?.userId) return;
+    setMessage("Uploading!");
 
     const reader = new FileReader();
 
@@ -49,6 +50,7 @@ const Avathar = ({
       setAvatar(base64);
 
       try {
+        onSetMessage(true);
         const userRef = doc(db, "users", user.userId);
         await updateDoc(userRef, {
           avatarBase64: base64,
@@ -78,6 +80,7 @@ const Avathar = ({
     reader.readAsDataURL(file);
   };
 
+  console.log(avatarBase64);
   return (
     <div className={`flex flex-col items-center w-24 ${className}`}>
       <div className="w-20 h-20 rounded-full overflow-hidden border-gray-300 bg-secondary flex justify-center items-center relative">
@@ -112,7 +115,11 @@ const Avathar = ({
       <Message
         message={message}
         show={showMessage}
-        type={message === "Success!" ? "success" : "error"}
+        type={
+          ["Success!", "Uploading!"]?.indexOf(message) >= 0
+            ? "success"
+            : "error"
+        }
       />
     </div>
   );

@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { collection, getDocs } from "firebase/firestore";
-import { db } from "../firebase";
+import { db, auth } from "../firebase";
 
 const useInputDebouncer = (input: string, delay: number) => {
   const [debouncedValue, setDebouncedValue] = useState(input);
@@ -26,12 +26,17 @@ const useInputDebouncer = (input: string, delay: number) => {
           ...doc.data(),
         }));
 
+        const currentUserId = auth.currentUser?.uid;
+
         const matches = users.filter((user: any) => {
-          return (
+          const matchesQuery =
             user.firstName?.toLowerCase().includes(query) ||
             user.lastName?.toLowerCase().includes(query) ||
-            user.email?.toLowerCase().includes(query)
-          );
+            user.email?.toLowerCase().includes(query);
+
+          const isNotCurrentUser = user.userId !== currentUserId;
+
+          return matchesQuery && isNotCurrentUser;
         });
 
         setResult(matches);
