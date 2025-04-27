@@ -90,8 +90,9 @@ const Login = () => {
           firstNameRef.current!.value = "";
           lastNameRef.current!.value = "";
         }
-      } catch (error) {
+      } catch (error: any) {
         console.log(error);
+        console.log(error?.error.message);
         setErrorText("Something happened. Please tay again after sometime.");
         onSetMessage(true);
       }
@@ -125,9 +126,13 @@ const Login = () => {
         }
         emailRef.current!.value = "";
         passwordRef.current!.value = "";
-      } catch (error) {
+      } catch (error: any) {
         console.log(error);
-        setErrorText("Something happened. Please tay again after sometime.");
+        let text = "Something happened. Please tay again after sometime.";
+        if (error?.message.includes("invalid-credential"))
+          text = "Invalid credentials";
+
+        setErrorText(text);
         onSetMessage(true);
       }
       setIsLoading(false);
