@@ -31,7 +31,10 @@ const Avathar = ({
 
   const onSetMessage = (value: boolean) => {
     setShowMessage(value);
-    setTimeout(() => setShowMessage(!value), 5000);
+    setTimeout(() => {
+      setShowMessage(!value);
+      setMessage("");
+    }, 5000);
   };
 
   const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -54,17 +57,21 @@ const Avathar = ({
         setMessage("Success!");
         onSetMessage(true);
         userCtx?.updateUser({ ...user, avatarBase64: base64 });
-      } catch (err) {
+      } catch (err: any) {
         console.error("Failed to save avatar:", err);
-        if (
-          err ===
-          'FirebaseError: The value of property "avatarBase64" is longer than 1048487 bytes.'
-        ) {
+
+        const errorMessage = err?.toString() || "";
+
+        if (errorMessage.includes("is longer than")) {
           setMessage("Please select a smaller size file <1MB.");
         } else {
-          setMessage("Something happened. Please tay again after sometime.");
+          setMessage("Something happened. Please try again after sometime.");
         }
+
         onSetMessage(true);
+        setAvatar("");
+      } finally {
+        if (fileInputRef.current) fileInputRef.current!.value = "";
       }
     };
 

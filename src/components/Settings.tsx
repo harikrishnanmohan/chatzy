@@ -98,19 +98,23 @@ const Settings = () => {
               value={themeCtx.theme === "dark"}
             />
           </div>
-          <div className="mt-8 flex">
+          <div className="mt-8 flex justify-center">
             <Input
               label="About"
               OnChange={(e) => {
                 setAbout(e.target.value);
                 setIsedited(true);
               }}
+              className="mr-2"
               value={about}
             />
             <Button
               Icon={CheckIcon}
-              className={isEdited ? "" : "cursor-not-allowed"}
+              className={`${
+                isEdited ? "" : "cursor-not-allowed"
+              } border-[1px] border-solid border-borderPrimary rounded-lg px-2`}
               onClick={onSave}
+              onlyIcon
             />
           </div>
           <div className="mt-8 w-full flex justify-center">

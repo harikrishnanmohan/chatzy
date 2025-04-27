@@ -67,7 +67,11 @@ const ChatItem = ({
       } mb-2 p-4 pr-4 rounded-lg flex text-sm w-full justify-between items-start cursor-pointer hover:bg-secondary transition-all duration-300`}
     >
       {icon ? (
-        <img src={icon} alt="user avatar" className="w-9 h-9 rounded-[50%]" />
+        <img
+          src={icon}
+          alt="user avatar"
+          className="w-9 h-9 rounded-[50%] object-cover"
+        />
       ) : (
         <UserIcon width="36px" height="36px" />
       )}
