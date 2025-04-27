@@ -40,7 +40,8 @@ type ChatProps = {
   chats: ChatType[];
   isLoading: boolean;
   showDetails: boolean;
-  setIsActiveChat: React.Dispatch<React.SetStateAction<boolean>>;
+  setShowLeftBar: React.Dispatch<React.SetStateAction<boolean>>;
+  showLeftBar: boolean;
 };
 
 const Chat = ({
@@ -48,13 +49,14 @@ const Chat = ({
   chats,
   isLoading,
   showDetails,
-  setIsActiveChat,
+  setShowLeftBar,
+  showLeftBar,
 }: ChatProps) => {
   const searchRef = useRef<HTMLInputElement>(null);
   const userCtx = useContext(UserContext);
   const [activeChat, setActiveChat] = useState<ChatType | null>(null);
   const [searchQuery, setSearchQuery] = useState<string>("");
-  const [showLeftBar, setShowLeftBar] = useState<boolean>(false);
+  // const [showLeftBar, setShowLeftBar] = useState<boolean>(false);
 
   useEffect(() => {
     const userId = userCtx?.getUser()?.userId;
@@ -133,7 +135,7 @@ const Chat = ({
         };
         setActiveChat(existingChat);
         setShowLeftBar(false);
-        setIsActiveChat(true);
+        // setIsActiveChat(true);
       } else {
         const chatId = [currentUser.userId, user.userId].sort().join("_");
 
@@ -162,12 +164,20 @@ const Chat = ({
 
         setActiveChat({ ...newChat, chatId: newChatRef.id });
         setShowLeftBar(false);
-        setIsActiveChat(true);
+        // setIsActiveChat(true);
       }
 
       setSearchQuery("");
     } catch (err) {
       console.error("Error starting chat:", err);
+    }
+  };
+
+  const setNewChat = (chat: ChatType) => {
+    {
+      setActiveChat(chat);
+      setShowLeftBar(false);
+      // setIsActiveChat(true);
     }
   };
 
@@ -181,7 +191,7 @@ const Chat = ({
         ) : (
           <div
             className={`transition-all duration-500  md:w-[35%] relative pt-6 ${
-              activeChat?.otherUser && showLeftBar ? "w-4" : "w-full mb-20"
+              activeChat?.otherUser && !showLeftBar ? "w-4" : "w-full mb-20"
             }`}
           >
             <div
@@ -194,13 +204,18 @@ const Chat = ({
               //   });
               // }}
               onClick={() => setShowLeftBar(true)}
-              className={`md:hidden ${!showLeftBar ? "hidden" : "md:hidden"}`}
+              className={`md:hidden ${
+                (activeChat?.otherUser && !showLeftBar) ||
+                (!activeChat?.otherUser && !showLeftBar)
+                  ? ""
+                  : "hidden md:hidden"
+              }`}
             >
               <MenuIcon />
             </div>
             <div
               className={` md:block ${
-                showLeftBar ? "hidden" : "block"
+                activeChat?.otherUser && !showLeftBar ? "hidden" : "block"
               } transition-all duration-500`}
             >
               <Input
@@ -242,11 +257,7 @@ const Chat = ({
                     userCtx?.getUser()?.userId
                   )}
                   isActive={activeChat?.chatId === chat.chatId}
-                  onClick={(c) => {
-                    setActiveChat(c);
-                    setShowLeftBar(false);
-                    setIsActiveChat(true);
-                  }}
+                  onClick={() => setNewChat(chat)}
                   chat={chat}
                 />
               ))}

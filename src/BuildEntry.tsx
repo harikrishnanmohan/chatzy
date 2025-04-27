@@ -43,7 +43,8 @@ const BuildEntry = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [totalUnreadMessageCount, setTotalUnreadMessageCount] = useState(0);
   const [chats, setChats] = useState<ChatType[]>([]);
-  const [isSctiveChat, setIsActiveChat] = useState<boolean>(false);
+  // const [isActiveChat, setIsActiveChat] = useState<boolean>(false);
+  const [showLeftBar, setShowLeftBar] = useState<boolean>(true);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -163,7 +164,7 @@ const BuildEntry = () => {
           isExpanded={isExpanded}
           setIsExpanded={setIsExpanded}
           unReadMessageCount={totalUnreadMessageCount}
-          className={`${isSctiveChat ? "hidden md:block" : ""}`}
+          className={`${showLeftBar ? "md:block" : "hidden"}`}
         />
         <div className="flex justify-between min-h-svh w-full realative">
           {location.pathname === "/chatzy/setting" ? (
@@ -174,7 +175,8 @@ const BuildEntry = () => {
               chats={chats}
               isLoading={isLoading}
               showDetails={showDetails}
-              setIsActiveChat={setIsActiveChat}
+              setShowLeftBar={setShowLeftBar}
+              showLeftBar={showLeftBar}
             />
           )}
         </div>
