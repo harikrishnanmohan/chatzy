@@ -1,8 +1,9 @@
 import { motion, AnimatePresence } from "framer-motion";
 
-type ErrorMessageProps = {
+type MessageProps = {
   message: string;
   show: boolean;
+  type: "success" | "error";
 };
 
 const slideVariants = {
@@ -11,7 +12,7 @@ const slideVariants = {
   exit: { x: "100%", opacity: 0 },
 };
 
-export const ErrorMessage = ({ message, show }: ErrorMessageProps) => {
+export const Message = ({ message, show, type }: MessageProps) => {
   return (
     <AnimatePresence>
       {show && (
@@ -21,7 +22,9 @@ export const ErrorMessage = ({ message, show }: ErrorMessageProps) => {
           exit="exit"
           variants={slideVariants}
           transition={{ duration: 0.5 }}
-          className="fixed top-5 right-5 bg-red-500 text-white px-6 py-3 rounded-lg shadow-lg z-50"
+          className={`fixed top-5 right-5  text-white px-6 py-3 rounded-lg shadow-lg z-50 ${
+            type === "error" ? "bg-red-500" : "bg-green-500"
+          }`}
         >
           {message}
         </motion.div>

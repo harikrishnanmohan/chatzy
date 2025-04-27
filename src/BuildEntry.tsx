@@ -164,7 +164,7 @@ const BuildEntry = () => {
           isExpanded={isExpanded}
           setIsExpanded={setIsExpanded}
           unReadMessageCount={totalUnreadMessageCount}
-          className={`${showLeftBar ? "md:block" : "hidden"}`}
+          className={`${showLeftBar ? "md:block" : "hidden md:block"}`}
         />
         <div className="flex justify-between min-h-svh w-full realative">
           {location.pathname === "/chatzy/setting" ? (

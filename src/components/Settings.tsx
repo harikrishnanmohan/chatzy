@@ -10,43 +10,62 @@ import { doc, updateDoc } from "firebase/firestore";
 import { auth, db } from "../firebase";
 import { signOut } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import CheckIcon from "../asset/CHeckIcon";
+import { Message } from "../atom/Message";
 
 const Settings = () => {
   const themeCtx = useContext(ThemeContext);
   const userCtx = useContext(UserContext);
   const user = userCtx?.getUser();
   const navigate = useNavigate();
+  const [isEdited, setIsedited] = useState(false);
+  const [message, setMessage] = useState("");
+  const [showMessage, setShowMessage] = useState(false);
 
   const [about, setAbout] = useState(user?.about);
+
+  useEffect(() => {
+    if (user?.about) {
+      setAbout(user.about);
+    }
+  }, [user?.about]);
+
+  const onSetMessage = (value: boolean) => {
+    setShowMessage(value);
+    setTimeout(() => setShowMessage(!value), 5000);
+  };
+
   const onSetAbout = async () => {
     if (!user?.userId) return;
 
     try {
-      const userRef = doc(db, "users", user.userId);
-      await updateDoc(userRef, {
-        about: about,
-      });
-      console.log("About updated successfully!");
+      if (isEdited) {
+        const userRef = doc(db, "users", user.userId);
+        await updateDoc(userRef, {
+          about: about,
+        });
+        console.log("About updated successfully!");
+        setMessage("Success!");
+        onSetMessage(true);
+        setIsedited(false);
+      }
     } catch (error) {
       console.error("Failed to update about:", error);
+      setMessage("Something happened. Please tay again after sometime.");
+      onSetMessage(true);
     }
   };
 
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      if (user?.userId) {
-        userCtx?.updateUser({
-          ...user,
-          about: about,
-        });
-        onSetAbout();
-      }
-    }, 500);
-
-    return () => {
-      clearTimeout(timer);
-    };
-  }, [about]);
+  const onSave = () => {
+    if (user?.userId) {
+      userCtx?.updateUser({
+        ...user,
+        about: about,
+      });
+      onSetAbout();
+      setMessage("");
+    }
+  };
 
   const handleLogout = async () => {
     try {
@@ -55,6 +74,8 @@ const Settings = () => {
       navigate("/chatzy/login");
     } catch (error) {
       console.error("Logout failed:", error);
+      setMessage("Something happened. Please tay again after sometime.");
+      onSetMessage(true);
     }
   };
 
@@ -77,11 +98,19 @@ const Settings = () => {
               value={themeCtx.theme === "dark"}
             />
           </div>
-          <div className="mt-8 ">
+          <div className="mt-8 flex">
             <Input
               label="About"
-              OnChange={(e) => setAbout(e.target.value)}
+              OnChange={(e) => {
+                setAbout(e.target.value);
+                setIsedited(true);
+              }}
               value={about}
+            />
+            <Button
+              Icon={CheckIcon}
+              className={isEdited ? "" : "cursor-not-allowed"}
+              onClick={onSave}
             />
           </div>
           <div className="mt-8 w-full flex justify-center">
@@ -93,6 +122,11 @@ const Settings = () => {
           </div>
         </div>
       </div>
+      <Message
+        message={message}
+        show={showMessage}
+        type={message === "Success!" ? "success" : "error"}
+      />
     </div>
   );
 };

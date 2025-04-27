@@ -13,8 +13,9 @@ import Button from "../atom/Button";
 import Input from "../atom/Input";
 import UserContext from "../context/user-context.tsx";
 import { useNavigate } from "react-router-dom";
-import { ErrorMessage } from "../atom/ErrorMEssage.tsx";
+
 import Loader from "../atom/Loader.tsx";
+import { Message } from "../atom/Message.tsx";
 
 const Login = () => {
   const images = [chat1, chat2, chat3];
@@ -46,6 +47,11 @@ const Login = () => {
 
     return () => clearInterval(interval);
   }, []);
+
+  const onSetMessage = (value: boolean) => {
+    setShowError(value);
+    setTimeout(() => setShowError(!value), 5000);
+  };
 
   const handleRegister = async () => {
     const email = emailRef.current?.value;
@@ -84,12 +90,13 @@ const Login = () => {
         }
       } catch (error) {
         console.log(error);
+        setErrorText("Something happened. Please tay again after sometime.");
+        onSetMessage(true);
       }
       setIsLoading(false);
     } else if (newUser && (!firstName || !lastName || email || password)) {
       setErrorText("Please fill in all fields.!");
-      setShowError(true);
-      setTimeout(() => setShowError(false), 5000);
+      onSetMessage(true);
       console.error("Please fill in all fields.");
       return;
     } else if (!newUser && email && password) {
@@ -118,12 +125,13 @@ const Login = () => {
         passwordRef.current!.value = "";
       } catch (error) {
         console.log(error);
+        setErrorText("Something happened. Please tay again after sometime.");
+        onSetMessage(true);
       }
       setIsLoading(false);
     } else {
       setErrorText("Email and Password are required!");
-      setShowError(true);
-      setTimeout(() => setShowError(false), 5000);
+      onSetMessage(true);
       console.error("Please fill in all fields.");
       return;
     }
@@ -215,7 +223,7 @@ const Login = () => {
           </p>
         </div>
       </div>
-      <ErrorMessage message={errorText} show={showError} />
+      <Message message={errorText} show={showError} type={"error"} />
     </div>
   );
 };

@@ -72,9 +72,11 @@ const Details = ({ showDetails, setShowDetails, activeChat }: DetailsProps) => {
               name={getFullName(activeChat)}
             />
           </div>
-          <div className="mt-7 bg-[#1f2329] rounded-lg p-4 text-textSecondary">
-            {activeChat?.otherUser?.about}
-          </div>
+          {activeChat?.otherUser?.about && (
+            <div className="mt-7 bg-[#1f2329] rounded-lg p-4 text-textSecondary">
+              {activeChat?.otherUser?.about}
+            </div>
+          )}
         </div>
         {/* <div className="flex justify-between w-full">
           <div className="flex gap-1 items-end">
