@@ -276,7 +276,7 @@ const Chat = ({
             </div>
           </div>
         )}
-        {chats.length === 0 && (
+        {chats.length === 0 && !isLoading && (
           <div className="flex md:w-[65%] w-full max-h-svh flex-col border-l-[1px] border-l-solid border-l-borderPrimary ml-6 justify-center items-center text-textSecondary">
             Looks a little quiet here... Why not say hello to someone or make a
             new connection?
