@@ -89,6 +89,7 @@ const Avathar = ({
             src={avatarBase64 || avatar}
             alt="Avatar"
             className="object-cover w-full h-full"
+            referrerPolicy="no-referrer"
           />
         ) : (
           <UserIcon width="60px" height="60px" />
