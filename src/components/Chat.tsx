@@ -181,7 +181,7 @@ const Chat = ({
       // setIsActiveChat(true);
     }
   };
-
+  console.log(chats.length);
   return (
     <>
       <div
@@ -222,7 +222,7 @@ const Chat = ({
               <Input
                 name="search"
                 Icon={Search}
-                placeholder="Search friends or find new onces"
+                placeholder="Search friends or find a new friend"
                 className="mb-4"
                 ref={searchRef}
                 iconLeft
@@ -276,7 +276,12 @@ const Chat = ({
             </div>
           </div>
         )}
-
+        {chats.length === 0 && (
+          <div className="flex md:w-[65%] w-full max-h-svh flex-col border-l-[1px] border-l-solid border-l-borderPrimary ml-6 justify-center items-center text-textSecondary">
+            Looks a little quiet here... Why not say hello to someone or make a
+            new connection?
+          </div>
+        )}
         {activeChat?.otherUser && (
           <div
             className={`flex md:w-[65%] w-full max-h-svh flex-col border-l-[1px] border-l-solid border-l-borderPrimary ml-6 ${
